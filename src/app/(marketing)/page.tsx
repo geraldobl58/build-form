@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import {
@@ -13,14 +14,13 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
 const schema = yup.object().shape({
-  orderIds: yup.array().of(yup.string()),
-  businessId: yup.array().of(yup.number())
+  orderIds: yup.array().of(yup.string()).required('Order Ids is required'),
+  businessId: yup.array().of(yup.number()).required('Business Id is required')
 })
 
 const Home = () => {
   const {
     handleSubmit,
-    reset,
     control,
     formState: { errors }
   } = useForm({
@@ -85,6 +85,7 @@ const Home = () => {
                       control={
                         <Checkbox
                           {...field}
+                          required={Boolean(errors.businessId)}
                           value={item.value}
                           checked={field.value.includes(item.value)}
                           onChange={() => {
