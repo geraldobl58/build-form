@@ -7,4 +7,4 @@ resources:
 images:
 - name: gitops
   newName: geraldobl58/gitops
-  newTag: newTag
+  newTag: 9806014b751b235d754f6d9ce411b083929064ea
