@@ -42,6 +42,7 @@ jobs:
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         run: |
+          cd k8s
           kustomize edit set image gitops=$DOCKER_USERNAME/gitops:$GITHUB_SHA
 
       - name: Git Commit
