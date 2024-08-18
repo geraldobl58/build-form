@@ -33,7 +33,7 @@ jobs:
           repository: ${{ secrets.DOCKER_USERNAME }}/gitops
           tags: ${{ github.sha }}, latest
 
-      - name: Setup Kuustomize
+      - name: Setup Kustomize
         uses: imranismail/setup-kustomize@v1
         with:
           kustomize-version: '3.6.1'
@@ -47,8 +47,8 @@ jobs:
 
       - name: Git Commit
         run: |
-          git config user.email "actions@github.com"
-          git config user.name "GitOps CI/CD"
+          git config --local user.email "actions@github.com"
+          git config --local user.name "Github Action"
           git commit -am "Bump docker version"
 
       - name: Push
