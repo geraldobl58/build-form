@@ -32,3 +32,26 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: ${{ secrets.DOCKER_USERNAME }}/gitops
           tags: ${{ github.sha }}, latest
+
+      - name: Setup Kuustomize
+        uses: imranismail/setup-kustomize@v1
+        with:
+          kustomize-version: '3.6.1'
+
+      - name: Update Kubernetes resources
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        run: |
+          kustomize edit set image gitops=$DOCKER_USERNAME/gitops:$GITHUB_SHA
+
+      - name: Git Commit
+        run: |
+          git config user.email "actions@github.com"
+          git config user.name "GitOps CI/CD"
+          git commit -am "Bump docker version"
+
+      - name: Push
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          repository: geraldobl58/build-form
