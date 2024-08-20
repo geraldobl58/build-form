@@ -51,70 +51,73 @@ const Home = () => {
   ]
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="max-w-screen-xl mx-auto">
-        <div className="grid grid-cols-3 gap-4 mt-32">
-          <Controller
-            name="orderIds"
-            control={control}
-            render={({ field }) => (
-              <Autocomplete
-                multiple
-                limitTags={1}
-                options={data}
-                getOptionLabel={(option) => option.title}
-                filterSelectedOptions
-                renderInput={(params) => (
-                  <TextField {...params} label="ID" placeholder="ID" />
-                )}
-                onChange={(_, data) =>
-                  field.onChange(data.map((item) => item.value))
-                }
-              />
-            )}
-          />
-
-          <div className="flex items-center justify-center">
-            {flags.map((item) => (
-              <div key={item.label}>
-                <Controller
-                  name="businessId"
-                  control={control}
-                  render={({ field }) => (
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          {...field}
-                          required={Boolean(errors.businessId)}
-                          value={item.value}
-                          checked={field.value.includes(item.value)}
-                          onChange={() => {
-                            const currentValues = field.value || []
-                            if (currentValues.includes(item.value)) {
-                              field.onChange(
-                                currentValues.filter(
-                                  (val) => val !== item.value
-                                )
-                              )
-                            } else {
-                              field.onChange([...currentValues, item.value])
-                            }
-                          }}
-                        />
-                      }
-                      label={item.label}
-                    />
+    <>
+      <h3>Implementando CI/CD com Docker/Kubernetes e ArgoCd</h3>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="max-w-screen-xl mx-auto">
+          <div className="grid grid-cols-3 gap-4 mt-32">
+            <Controller
+              name="orderIds"
+              control={control}
+              render={({ field }) => (
+                <Autocomplete
+                  multiple
+                  limitTags={1}
+                  options={data}
+                  getOptionLabel={(option) => option.title}
+                  filterSelectedOptions
+                  renderInput={(params) => (
+                    <TextField {...params} label="ID" placeholder="ID" />
                   )}
+                  onChange={(_, data) =>
+                    field.onChange(data.map((item) => item.value))
+                  }
                 />
-              </div>
-            ))}
+              )}
+            />
+
+            <div className="flex items-center justify-center">
+              {flags.map((item) => (
+                <div key={item.label}>
+                  <Controller
+                    name="businessId"
+                    control={control}
+                    render={({ field }) => (
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            {...field}
+                            required={Boolean(errors.businessId)}
+                            value={item.value}
+                            checked={field.value.includes(item.value)}
+                            onChange={() => {
+                              const currentValues = field.value || []
+                              if (currentValues.includes(item.value)) {
+                                field.onChange(
+                                  currentValues.filter(
+                                    (val) => val !== item.value
+                                  )
+                                )
+                              } else {
+                                field.onChange([...currentValues, item.value])
+                              }
+                            }}
+                          />
+                        }
+                        label={item.label}
+                      />
+                    )}
+                  />
+                </div>
+              ))}
+            </div>
+            <Button type="submit" variant="contained">
+              Pesquisar
+            </Button>
           </div>
-          <Button type="submit" variant="contained">
-            Pesquisar
-          </Button>
         </div>
-      </div>
-    </form>
+      </form>
+    </>
   )
 }
 
